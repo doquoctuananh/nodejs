@@ -1,13 +1,21 @@
 const express = require('express');
 const morgan = require('morgan');
+var { engine } = require('express-handlebars');
+var path = require('path');
 const app = express();
 const port = 3000;
+
+// template engine views
+app.engine('hbs', engine({ extname: '.hbs' }));
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'resource/views'));
+console.log(path.join(__dirname, 'resource/views'));
 
 // ghi ra cac log
 app.use(morgan('combined'));
 
 app.get('/', (req, res) => {
-    res.send('Hello World!123');
+    res.render('home');
 });
 
 app.listen(port, () => {
